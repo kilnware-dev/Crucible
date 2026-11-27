@@ -3,9 +3,10 @@
 #include "types.hpp"
 #include "token.hpp"
 
+#include <span>
+/*
 namespace lf {
 	namespace node {
-		struct 
 	}
 
 
@@ -22,3 +23,4 @@ namespace lf {
 		size_t index;
 	}
 }
+*/

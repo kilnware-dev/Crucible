@@ -61,7 +61,9 @@ namespace lf {
 	}
 
 	Token Lexer::lex_identifier() {
-		advance();
+		auto is_allowed = [](uchar key) { return std::isalpha(key) || std::isdigit(key) || key == '_'; };
+		this->_max
+
 		return Token::identifier(_position, {});
 	}
 	Token Lexer::lex_number() {

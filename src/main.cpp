@@ -1,6 +1,7 @@
 
 #include "types.hpp"
 #include "lexer.hpp"
+#include "string_interner.hpp"
 
 #include <CLI\CLI.hpp>
 
@@ -18,9 +19,9 @@ var Foo : i32 = 5; void
 
 i32 main(i32 argc, char* argv[]) {
 
-    auto tokens = lf::Lexer::lex(std::string_view(code));
+	auto tokens = lf::Lexer::lex(std::string_view(code));
     for (auto token : tokens) {
 		std::println("{}", token);
     }
-    return 0;
+	return 0;
 }
