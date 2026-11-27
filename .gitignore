@@ -1,4 +1,18 @@
+# Build Folders
+/out
+/.out
+/build
 /.build
+
+# Tool Folders
+/vcpkg_installed
 /.vcpkg_installed
+
+# IDE Folders
 /.vs
 /.obsidian
+
+# Custom Folders
+/local
+/.local
+

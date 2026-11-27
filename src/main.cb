@@ -1,0 +1,22 @@
+// litterally adds a new source file
+#import "daemon.cpp"
+#import "main.cpp" with g++ -std=c++23 -c {file} -o {obj}
+
+// litterally links to the std.lib file
+// and also makes the symbols available
+// with some kind of interface file
+#import <std>
+// include folders, again defined by the source
+#include "../include"
+
+#ifdef _WIN32
+#import "windows/thread.cpp"
+#else
+#import "posix/thread.cpp"
+#endif
+
+
+crucible init burner
+crucible run burner
+crucible config 
+crucible exit burner

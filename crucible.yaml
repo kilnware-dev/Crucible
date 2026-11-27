@@ -1,0 +1,9 @@
+
+cinnabar: burner
+entry: src/main.cb
+
+rules:
+  - pattern: "*.cpp"
+    run: g++ -std=c++23 -c {file} -o {obj}
+  - pattern: "*.c"
+    run: gcc -std=c17 -c {file} -o {obj}
