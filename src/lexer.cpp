@@ -6,12 +6,12 @@
 #include <unordered_map>
 
 namespace lf {
-	std::vector<Token> Lexer::lex(Lexer&& lexer) {
+	std::tuple<std::vector<Token>, StringInterner> Lexer::lex(Lexer&& lexer) {
 		std::vector<Token> result;
 		while (lexer._position < lexer._source.size()) {
 			result.emplace_back(lexer.lex_next());
 		}
-		return result;
+		return { result, std::move(lexer._strings) };
 	}
 
 	Lexer::Lexer(std::string_view source) : _source(std::string(source)) {}
@@ -62,14 +62,33 @@ namespace lf {
 
 	Token Lexer::lex_identifier() {
 		auto is_allowed = [](uchar key) { return std::isalpha(key) || std::isdigit(key) || key == '_'; };
-		this->_max
+		size_t position = _position;
+		while (true) {
+			if (!is_allowed(_source[_position])) { break; }
+			advance();
+		}
+		size_t length = _position - position;
+		auto sw = std::string_view(&_source.data()[position], length);
+		if (auto it = Token::keyword_lookup.find(sw); it == Token::keyword_lookup.end()) {
+			Token::Symbol symbol = _strings.emplace(sw);
+			return Token::identifier(position, symbol);
+		}
+		else {
+			return Token::keyword(position, it->second);
+		}
 
-		return Token::identifier(_position, {});
 	}
 	Token Lexer::lex_number() {
 		auto is_allowed = [](unsigned char key) { return std::isdigit(key) || key == '.'; };
-		advance();
-		return Token::number_literal(_position, {});
+		size_t position = _position;
+		while (true) {
+			if (!is_allowed(_source[_position])) { break; }
+			advance();
+		}
+		size_t length = _position - position;
+		auto sw = std::string_view(&_source.data()[position], length);
+		Token::Symbol symbol = _strings.emplace(sw);
+		return Token::number_literal(position, symbol);
 	}
 
 
@@ -80,6 +99,7 @@ namespace lf {
 		return Token::punctuator(_position, Token::Type::punc_arrow_left);
 
 	}
+
 	bool Lexer::can_lex_identifier(unsigned char next) {
 		return std::isalpha(next) || next == '_';
 	}

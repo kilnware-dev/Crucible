@@ -11,7 +11,7 @@
 #include <print>
 
 const char* code = R"(
-var Foo : i32 = 5; void
+var Foo : i32 = 50.3; void
 0i32 return something;
 
 )";
@@ -19,7 +19,7 @@ var Foo : i32 = 5; void
 
 i32 main(i32 argc, char* argv[]) {
 
-	auto tokens = lf::Lexer::lex(std::string_view(code));
+	auto [tokens, strings] = lf::Lexer::lex(std::string_view(code));
     for (auto token : tokens) {
 		std::println("{}", token);
     }

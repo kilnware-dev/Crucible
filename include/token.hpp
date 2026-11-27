@@ -78,7 +78,6 @@ namespace lf {
 		static Token keyword(u64 position, Type type);
 		static Token identifier(u64 position, Symbol symbol);
 		static Token number_literal(u64 position, Symbol symbol);
-		static Token string_literal(u64 position, Symbol symbol);
 		static Token punctuator(u64 position, Type type);
 		static Token illegal(u64 position, Symbol symbol);
 

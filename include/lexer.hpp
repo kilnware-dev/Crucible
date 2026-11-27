@@ -9,7 +9,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
-
+#include <tuple>
 namespace lf {
 
 	struct LexResult {
@@ -18,7 +18,7 @@ namespace lf {
 	};
 
 	struct Lexer {
-		static std::vector<Token> lex(Lexer&& lexer);
+		static std::tuple<std::vector<Token>, StringInterner> lex(Lexer&& lexer);
 		Lexer(std::string_view source);
 
 		uchar peek(u64 amount = 0) const;
@@ -35,11 +35,11 @@ namespace lf {
 		static bool can_lex_number(uchar next);
 		static bool can_lex_operator(uchar next);
 
-		template<typename Lambda> 
-		std::string_view 
+
 
 		std::string _source;
 		u64 _position = 0;
+		StringInterner _strings;
 	};
 
 } // namespace lf
